@@ -13,13 +13,26 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
 
-// Configure SQL Server DbContext
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=(localdb)\\PersonalProjects;Database=QuickBiteDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;";
+// Configure Database (SQL Server locally, SQLite in cloud fallback)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<QuickBiteDbContext>(options =>
 {
-    options.UseSqlServer(connectionString);
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        // Default local development
+        options.UseSqlServer("Server=(localdb)\\PersonalProjects;Database=QuickBiteDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;");
+    }
+    else if (connectionString.Contains("Data Source=", StringComparison.OrdinalIgnoreCase) || connectionString.EndsWith(".db", StringComparison.OrdinalIgnoreCase))
+    {
+        // SQLite cloud mode
+        options.UseSqlite(connectionString);
+    }
+    else
+    {
+        // SQL Server mode
+        options.UseSqlServer(connectionString);
+    }
 });
 
 // Configure Dependency Injection: Services Layer
