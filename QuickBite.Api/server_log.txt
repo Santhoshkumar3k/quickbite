@@ -1,0 +1,12 @@
+info: QuickBite.Api[0]
+      ? Microsoft SQL Server 'QuickBiteDb' verified and seeded successfully!
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5004
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5149
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Users\santhoahkumar\.gemini\antigravity\scratch\QuickBite\QuickBite.Api
